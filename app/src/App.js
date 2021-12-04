@@ -19,9 +19,15 @@ const App = () => {
       if (solana) {
         if (solana.isPhantom) {
           console.log("Phantom wallet found!");
+
+          const response = await solana.connect({onlyIfTrusted: true});
+          console.log(
+            "Connected with Public Key:",
+            response.publicKey.toString()
+          )
         }
       } else {
-        alert("Solana object not  found! Get a Phantom Wallet ");
+        alert("Solana object not  found! Get a Phantom Wallet");
       }
     } catch(error) {
       console.log(error);
@@ -42,7 +48,7 @@ const App = () => {
     <div className="App">
       <div className="container">
         <div className="header-container">
-          <p className="header">🍭 Candy Drop</p>
+          <p className="header">🍭 Dalvin's NFT Drop</p>
           <p className="sub-text">NFT drop machine with fair mint</p>
         </div>
         <div className="footer-container">
