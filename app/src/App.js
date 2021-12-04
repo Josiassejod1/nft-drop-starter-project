@@ -1,16 +1,35 @@
-import React, { useEffect } from 'react';
-import './App.css';
-import twitterLogo from './assets/twitter-logo.svg';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import twitterLogo from "./assets/twitter-logo.svg";
 
 // Constants
-const TWITTER_HANDLE = 'officialdalvinj';
+const TWITTER_HANDLE = "officialdalvinj";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const App = () => {
-
+  const [walletAddress, setWalletAddress] = useState(null);
   /*
     Declare your function
   */
+
+  const connectWallet = async () => {
+    const { solana } = window;
+
+    if(solana) {
+      const response = await solana.connect();
+      console.log("Connected with Public Key", response.publicKey.toString());
+      setWalletAddress(response.publicKey.toString())
+    }
+  };
+
+  const renderNotConnectedContainer = () => (
+    <button
+      className="cta-button connect-wallet-button"
+      onClick={connectWallet}
+    >
+      Connect to Wallet
+    </button>
+  );
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -20,29 +39,28 @@ const App = () => {
         if (solana.isPhantom) {
           console.log("Phantom wallet found!");
 
-          const response = await solana.connect({onlyIfTrusted: true});
-          console.log(
-            "Connected with Public Key:",
-            response.publicKey.toString()
-          )
+          const response = await solana.connect({ onlyIfTrusted: true });
+          const publicKey = response.publicKey.toString();
+          console.log("Connected with Public Key:", publicKey);
+
+          setWalletAddress(publicKey);
         }
       } else {
         alert("Solana object not  found! Get a Phantom Wallet");
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() =>{
+  useEffect(() => {
     const onLoad = async () => {
       await checkIfWalletIsConnected();
-    }
+    };
 
-    window.addEventListener('load', onLoad);
-    return () => window.removeEventListener('load', onLoad);
-  }, [])
-
+    window.addEventListener("load", onLoad);
+    return () => window.removeEventListener("load", onLoad);
+  }, []);
 
   return (
     <div className="App">
@@ -50,6 +68,8 @@ const App = () => {
         <div className="header-container">
           <p className="header">🍭 Dalvin's NFT Drop</p>
           <p className="sub-text">NFT drop machine with fair mint</p>
+          {/* Render your connect to wallet button right here */}
+          {!walletAddress && renderNotConnectedContainer()}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
