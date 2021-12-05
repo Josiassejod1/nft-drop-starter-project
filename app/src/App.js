@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import twitterLogo from "./assets/twitter-logo.svg";
+import glb from "../src/assets/astro.glb";
+import poster from "../src/assets/poster.png";
+import book from "../src/assets/book.png";
+import { modelviewer } from "@google/model-viewer";
 
 // Constants
 const TWITTER_HANDLE = "officialdalvinj";
@@ -15,15 +19,16 @@ const App = () => {
   const connectWallet = async () => {
     const { solana } = window;
 
-    if(solana) {
+    if (solana) {
       const response = await solana.connect();
       console.log("Connected with Public Key", response.publicKey.toString());
-      setWalletAddress(response.publicKey.toString())
+      setWalletAddress(response.publicKey.toString());
     }
   };
 
   const renderNotConnectedContainer = () => (
     <button
+      style={{ backgroundColor: "lightgreen" }}
       className="cta-button connect-wallet-button"
       onClick={connectWallet}
     >
@@ -66,20 +71,47 @@ const App = () => {
     <div className="App">
       <div className="container">
         <div className="header-container">
-          <p className="header">🍭 Dalvin's NFT Drop</p>
-          <p className="sub-text">NFT drop machine with fair mint</p>
+          <p className="header">The Astronaut NFT Drop 👨‍🚀</p>
+          <p className="sub-text">
+            Support Dalvin's Book{" "}
+            <a
+              href="https://securinginternships.com"
+              target="_blank"
+              style={{ color: "lightgreen" }}
+            >
+              {" "}
+              The Guidebook To Securing Internships
+            </a>
+          </p>
+          <model-viewer
+            style={{ margin: "auto", padding: 0 }}
+            alt="Astronaut"
+            src={glb}
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            poster={poster}
+            seamless-poster
+            shadow-intensity="1"
+            camera-controls
+          ></model-viewer>
           {/* Render your connect to wallet button right here */}
           {!walletAddress && renderNotConnectedContainer()}
         </div>
-        <div className="footer-container">
-          <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
-          <a
-            className="footer-text"
-            href={TWITTER_LINK}
-            target="_blank"
-            rel="noreferrer"
-          >{`built on @${TWITTER_HANDLE}`}</a>
+        <div className="container text-center">
+          <p className="sub-text">While Supplies Last 🚀</p>
+          <p>Exclusive Coaching on Securing Internships</p>
+          <p>Limited Time Resume Editing Services</p>
+          <p>Discounts on Future Courses & Material</p>
         </div>
+      </div>
+      <div className="footer-container">
+        <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
+        <a
+          className="footer-text"
+          href={TWITTER_LINK}
+          target="_blank"
+          rel="noreferrer"
+        >{`built on @${TWITTER_HANDLE}`}</a>
       </div>
     </div>
   );

@@ -1,11 +1,14 @@
 .App {
   height: 100vh;
-  background-color: rgb(20, 20, 20);
+  background-color: rgba(20, 20, 20, 0.815);
   overflow: scroll;
   text-align: center;
-  overflow: hidden;
 }
 
+.html {
+  height: 100%;
+  width: 100%;
+}
 .container {
   height: 100%;
   display: flex;
@@ -72,10 +75,8 @@
 }
 
 .footer-container {
-  display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
   width: 100%;
   bottom: 0;
   left: 0;
