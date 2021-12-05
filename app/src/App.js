@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import twitterLogo from "./assets/twitter-logo.svg";
+import CandyMachine from "./CandyMachine";
 import glb from "../src/assets/astro.glb";
 import poster from "../src/assets/poster.png";
 import book from "../src/assets/book.png";
 import { modelviewer } from "@google/model-viewer";
+
 
 // Constants
 const TWITTER_HANDLE = "officialdalvinj";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const App = () => {
-  const [walletAddress, setWalletAddress] = useState(null);
+  const [walletAddress, setWalletAddress] = useState("");
   /*
     Declare your function
   */
@@ -84,7 +86,7 @@ const App = () => {
             </a>
           </p>
           <model-viewer
-            style={{ margin: "auto", padding: 0 }}
+            style={{ margin: "auto", padding: 0, height: 250,  }}
             alt="Astronaut"
             src={glb}
             ar
@@ -96,6 +98,7 @@ const App = () => {
           ></model-viewer>
           {/* Render your connect to wallet button right here */}
           {!walletAddress && renderNotConnectedContainer()}
+          { walletAddress  && <CandyMachine walletAddress={window.solana} />} 
         </div>
         <div className="container text-center">
           <p className="sub-text">While Supplies Last 🚀</p>

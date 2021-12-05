@@ -1,17 +1,17 @@
 {
-    "name": "Book Cover",
+    "name": "Alternate Space",
     "symbol": "",
-    "image": "1.png",
+    "image": "2.png",
     "properties": {
       "files": [
         {
-          "uri": "1.png",
+          "uri": "2.png",
           "type": "image/png"
         }
       ],
       "creators": [
         {
-          "address": "INSERT_CREATOR_WALLET_ADDRESS_HERE",
+          "address": "A9ppHagdwL5cz4GBa1jAMdsXM4MeeT3Nyk7Nsa8nPjMr",
           "share": 100
         }
       ]
