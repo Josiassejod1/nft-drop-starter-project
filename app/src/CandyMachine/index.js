@@ -10,6 +10,8 @@ import {
   SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
 } from './helpers';
 import { rpc } from '@project-serum/anchor/dist/cjs/utils';
+import { CountdownTimer } from '../CountdownTimer';
+import { render } from 'react-dom';
 const {
   metadata: { Metadata, MetadataProgram },
 } = programs;
@@ -349,14 +351,33 @@ const CandyMachine = ({ walletAddress }) => {
   </div>
   );
 
+  const renderDropTimer = () => {
+    const currentDate = Date.now();
+    const dropDate =  new Date(machineStats.goLiveData * 1000);
+   /// Test countdown timer
+     ///const dropDate =  new Date("2024-02-07 15:13:06");
+
+    if (currentDate < dropDate) {
+      return <CountdownTimer dropDate={dropDate}/>
+    }
+
+    return <p>{`Drop Date: ${machineStats.goLiveDateTimeString}`}</p>;
+  }
+
   return (
     machineStats && (
       <div className="machine-container">
-      <p>Drop Date: {machineStats.goLiveDateTimeString}</p>
+        {renderDropTimer()}
       <p>Items Minted: {machineStats.itemsRemaining} / {machineStats.itemsAvailable}</p>
-      <button className="cta-button mint-button" onClick={mintToken} disabled={isMinting}>
+      {machineStats.itemsRedeemed === machineStats.itemsAvailable ? (
+        <div>
+          <iframe src="https://giphy.com/embed/3orieVPmTC9rnXKq88" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/thesimpsons-3orieVPmTC9rnXKq88">via GIPHY</a></p>
+        </div>
+      ) : (
+        <button className="cta-button mint-button" onClick={mintToken} disabled={isMinting}>
         Mint NFT
       </button>
+      )}
       {isLoadingMints && <p>LOADING MINTS...</p>}
       {mints.length > 0 && renderMintedItems()}
     </div>
