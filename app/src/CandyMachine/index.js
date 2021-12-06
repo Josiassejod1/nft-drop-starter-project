@@ -47,6 +47,7 @@ const CandyMachine = ({ walletAddress }) => {
 
 
   const  seeRemainingMints = async () => {
+    setIsLoadingMints(true);
     const data = await fetchHashTable(process.env.REACT_APP_CANDY_MACHINE_ID, true);
       if (data.length !== 0) {
         for (const mint of data) {
@@ -60,6 +61,8 @@ const CandyMachine = ({ walletAddress }) => {
           }
         }
       }
+
+    setIsLoadingMints(false);
   }
 
   const getCandyMachineState = async () => {
@@ -188,6 +191,7 @@ const CandyMachine = ({ walletAddress }) => {
 
   const mintToken = async () => {
     try {
+      setIsMinting(true);
       const mint = web3.Keypair.generate();
       const token = await getTokenWallet(
         walletAddress.publicKey,
@@ -271,6 +275,7 @@ const CandyMachine = ({ walletAddress }) => {
 
             const { result } = notification;
             if (!result.err) {
+              setIsMinting(false);
               console.log('NFT Minted!');
             }
           }
@@ -278,6 +283,7 @@ const CandyMachine = ({ walletAddress }) => {
         { commitment: 'processed' }
       );
     } catch (error) {
+      setIsMinting(false);
       let message = error.msg || 'Minting failed! Please try again!';
 
       if (!error.msg) {
@@ -348,9 +354,10 @@ const CandyMachine = ({ walletAddress }) => {
       <div className="machine-container">
       <p>Drop Date: {machineStats.goLiveDateTimeString}</p>
       <p>Items Minted: {machineStats.itemsRemaining} / {machineStats.itemsAvailable}</p>
-      <button className="cta-button mint-button" onClick={mintToken}>
+      <button className="cta-button mint-button" onClick={mintToken} disabled={isMinting}>
         Mint NFT
       </button>
+      {isLoadingMints && <p>LOADING MINTS...</p>}
       {mints.length > 0 && renderMintedItems()}
     </div>
     )
