@@ -71,7 +71,16 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="container">
+      <div className="text-center">
+        <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
+        <a
+          className="footer-text"
+          href={TWITTER_LINK}
+          target="_blank"
+          rel="noreferrer"
+        >{`built by @${TWITTER_HANDLE}`}</a>
+      </div>
+      <div className="container" style={{textAlign: "center"}}>
         <div className="header-container">
           <p className="header">The Astronaut NFT Drop 👨‍🚀</p>
           <p className="sub-text">
@@ -106,15 +115,6 @@ const App = () => {
           <p>Limited Time Resume Editing Services</p>
           <p>Discounts on Future Courses & Material</p>
         </div>
-      </div>
-      <div className="footer-container">
-        <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
-        <a
-          className="footer-text"
-          href={TWITTER_LINK}
-          target="_blank"
-          rel="noreferrer"
-        >{`built on @${TWITTER_HANDLE}`}</a>
       </div>
     </div>
   );
